@@ -203,7 +203,7 @@ def delete(id):
         
 
     else:
-        flash ("Either here is no such article or you don't have the pemission to execute this action","danger")
+        flash ("Either there is no such article or you don't have the pemission to execute this action","danger")
         return redirect(url_for("index"))
 
 # Update Article
