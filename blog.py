@@ -84,9 +84,10 @@ def dashboard():
 # Register
 @app.route ("/register", methods = ["GET", "POST"])
 def register():
-    form = RegisterForm(request.form)
+    if not "logged_in" in session:
+     form = RegisterForm(request.form)
 
-    if request.method == "POST" and form.validate():
+     if request.method == "POST" and form.validate():
         name = form.name.data
         username = form.username.data
         email = form.email.data
@@ -103,9 +104,12 @@ def register():
         flash("Successfully registered.", "success")
         return redirect(url_for("login"))
     
-    else:
+     else:
         return render_template("register.html", form = form)
-
+    else:
+        flash("To register, please log out.", "danger")
+        return redirect(url_for("index"))
+    
 # Login Page
 @app.route("/login", methods = ["GET","POST"])
 def login():
@@ -158,6 +162,7 @@ def article(id):
 @app.route("/logout")
 def logout():
     session.clear()
+    flash("Succesfully logged out", "success")
     return redirect(url_for("index"))
 
 # Add Article
